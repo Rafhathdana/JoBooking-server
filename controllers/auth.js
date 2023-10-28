@@ -4,6 +4,17 @@ import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 export const register = async (req, res, next) => {
   try {
+    const { username, email } = req.body;
+    console.log(username);
+    const usernameCheck = await User.findOne({
+      username: username,
+    });
+    if (usernameCheck) next(createError(400, "username used earlier"));
+    const emailCheck = await User.findOne({
+      email: email,
+    });
+    if (emailCheck) next(createError(400, "email used earlier"));
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({
@@ -31,7 +42,7 @@ export const login = async (req, res, next) => {
 
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT
+      process.env.JWT_SECRET
     );
 
     const { password, isAdmin, ...otherDetails } = user._doc;
@@ -39,8 +50,14 @@ export const login = async (req, res, next) => {
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json({details:{ ...otherDetails },isAdmin});
+      .json({ details: { ...otherDetails }, isAdmin });
   } catch (err) {
     next(err);
   }
+};
+export const handleLogout = async (req, res) => {
+  console.log("ecdfrsrf");
+  res.clearCookie("access_token");
+
+  res.status(200).json({ message: "logout successful" });
 };
