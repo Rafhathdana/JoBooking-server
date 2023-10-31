@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -15,6 +16,22 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String, // Assuming phone number is a string, adjust the type accordingly
+    },
+    imageUrl: {
+      type: String, // Assuming image URL is a string, adjust the type accordingly
+    },
+    country: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
     isAdmin: {
       type: Boolean,
       default: false,
@@ -22,4 +39,5 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 export default mongoose.model("User", UserSchema);

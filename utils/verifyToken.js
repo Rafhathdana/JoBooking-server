@@ -29,7 +29,7 @@ export const verifyUser = (req, res, next) => {
 };
 
 export const verifyAdmin = (req, res, next) => {
-  console.log("esdce");
+  console.log("esdce", req.user);
   verifyToken(req, res, next, () => {
     console.log(req.user.isAdmin + "frdew");
     if (req.user.isAdmin) {
