@@ -13,7 +13,14 @@ const app = express();
 dotenv.config();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000","http://booking.learnt.tech","https://booking.learnt.tech"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://booking.learnt.tech",
+      "https://booking.learnt.tech",
+      "http://adminbooking.learnt.tech",
+      "https://adminbooking.learnt.tech",
+    ],
     credentials: true,
   })
 );
