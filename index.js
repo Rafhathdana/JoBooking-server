@@ -18,8 +18,8 @@ app.use(
       "http://localhost:3000",
       "http://booking.learnt.tech",
       "https://booking.learnt.tech",
-      "http://admin.booking.learnt.tech",
-      "https://admin.booking.learnt.tech",
+      "http://adminbooking.learnt.tech",
+      "https://adminbooking.learnt.tech",
     ],
     credentials: true,
   })
