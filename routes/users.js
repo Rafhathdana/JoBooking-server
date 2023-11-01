@@ -3,6 +3,7 @@ import {
   deleteUser,
   getUser,
   getUsers,
+  getUsersCount,
   updatedUser,
 } from "../controllers/user.js";
 import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
@@ -24,4 +25,5 @@ router.delete("/:id", verifyUser, deleteUser);
 router.get("/:id", verifyUser, getUser);
 //getall
 router.get("/", verifyAdmin, getUsers);
+router.get("/count", verifyAdmin, getUsersCount);
 export default router;

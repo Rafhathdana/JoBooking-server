@@ -1,4 +1,5 @@
 import Hotel from "../models/Hotel.js";
+import Room from "../models/Room.js";
 
 export const createHotel = async (req, res, next) => {
   const newHotel = new Hotel(req.body);
@@ -75,14 +76,43 @@ export const countByType = async (req, res, next) => {
     const resortCount = await Hotel.countDocuments({ type: "resort" });
     const villaCount = await Hotel.countDocuments({ type: "villa" });
     const cabinCount = await Hotel.countDocuments({ type: "cabin" });
+    const cottageCount = await Hotel.countDocuments({ type: "cottage" });
+    const serviced_appartmentCount = await Hotel.countDocuments({
+      type: "serviced_appartment",
+    });
+    const holidayhomeCount = await Hotel.countDocuments({
+      type: "holidayhome",
+    });
+    const guesthomeCount = await Hotel.countDocuments({
+      type: "guesthome",
+    });
+    const hostelCount = await Hotel.countDocuments({ type: "hostel" });
     res.status(200).json([
-      { type: "hotel", count: hotelCount },
-      { type: "apartments", count: apartmentCount },
-      { type: "resorts", count: resortCount },
-      { type: "villas", count: villaCount },
-      { type: "cabins", count: cabinCount },
+      { type: "Hotels", count: hotelCount },
+      { type: "Apartments", count: apartmentCount },
+      { type: "Resorts", count: resortCount },
+      { type: "Villas", count: villaCount },
+      { type: "Cabins", count: cabinCount },
+      { type: "Cottages", count: cottageCount },
+      { type: "Serviced Appartment", count: serviced_appartmentCount },
+      { type: "Holiday Homes", count: holidayhomeCount },
+      { type: "Guest Homes", count: guesthomeCount },
+      { type: "Hostels", count: hostelCount },
     ]);
   } catch (err) {
     next(err);
+  }
+};
+export const getHotelRooms = async (req, res, next) => {
+  try {
+    const hotel = await Hotel.findById(req.params.id);
+    const list = await Promise.all(
+      hotel.rooms.map((room) => {
+        return Room.findById(room);
+      })
+    );
+    res.status(200).json(list);
+  } catch (err) {
+    next;
   }
 };
